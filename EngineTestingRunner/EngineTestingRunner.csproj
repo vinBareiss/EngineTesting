@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\CoreEngine.cs" />
+    <Compile Include="src\core\CoreEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
