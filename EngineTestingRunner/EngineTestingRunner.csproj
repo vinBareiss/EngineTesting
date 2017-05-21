@@ -47,15 +47,26 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\CoreEngine.cs" />
+    <Compile Include="src\Engine\Mesh.cs" />
+    <Compile Include="src\Engine\MeshLoader.cs" />
+    <Compile Include="src\Engine\util\Buffer.cs" />
+    <Compile Include="src\Engine\util\OpenGlHandle.cs" />
+    <Compile Include="src\Engine\Vertex.cs" />
+    <Compile Include="src\Game\testGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <None Include="res\shaders\basic.vert" />
+    <None Include="res\shaders\test.frag" />
+    <None Include="res\teddy.obj" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="res\shaders\" />
+    <Content Include="res\container2.png" />
+    <Content Include="res\container2_specular.png" />
+    <Content Include="res\wall.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
