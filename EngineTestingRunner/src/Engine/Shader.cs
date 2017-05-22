@@ -4,7 +4,7 @@ using System.IO;
 using OpenTK.Graphics.OpenGL4;
 
 
-namespace EngineTesting.src.Engine
+namespace EngineTesting
 {
     public class Shader : OGLHandle
     {

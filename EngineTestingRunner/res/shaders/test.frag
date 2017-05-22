@@ -1,12 +1,9 @@
-#version 450
+#version 450 core
 
-
-in vec4 Col;
 
 out vec4	fragCol;
 
-
 void main(){
 
-fragCol = col;
+fragCol = vec4(1);
 }
