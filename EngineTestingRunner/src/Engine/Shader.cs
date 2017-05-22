@@ -11,6 +11,8 @@ namespace EngineTesting
         public Shader(string src, ShaderType type) : base(GL.CreateShader(type)) {
             GL.ShaderSource(this, src);
             GL.CompileShader(this);
+
+            Console.WriteLine(type.ToString() + " : " + GL.GetShaderInfoLog(this));
         }
 
         public static string FromFile(string path) {
