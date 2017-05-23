@@ -9,7 +9,6 @@ namespace EngineTesting
     public class TestGame : OpenTK.GameWindow
     {
         VertexArray vao;
-
         ShaderProgram prog;
 
         float[] vertices = new float[]
@@ -25,7 +24,7 @@ namespace EngineTesting
 
 
         public TestGame()
-            : base(1280, 720, GraphicsMode.Default, "BaseGameWindow", GameWindowFlags.Default, DisplayDevice.Default, 4, 0, GraphicsContextFlags.ForwardCompatible)
+            : base(640, 420, GraphicsMode.Default, "BaseGameWindow", GameWindowFlags.Default, DisplayDevice.Default, 4, 0, GraphicsContextFlags.ForwardCompatible)
         {
             Console.WriteLine("--------------------------------------------------------------");
             Console.WriteLine("OpenGl: " + GL.GetString(StringName.Version));
@@ -53,11 +52,16 @@ namespace EngineTesting
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, iboHandle);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
 
+            string[] src = {
+                "#version 430 core\n",
+                Shader.FromFile("res/shaders/function.frag"),
+                Shader.FromFile("res/shaders/test.frag")
+            };
 
             Shader[] shaders = {
+
                 new Shader(Shader.FromFile("res/shaders/basic.vert"), ShaderType.VertexShader),
-                new Shader(Shader.FromFile("res/shaders/test.frag"), ShaderType.FragmentShader),
-                new Shader(Shader.FromFile("res/shaders/function.frag"), ShaderType.FragmentShader)
+                new Shader(src, ShaderType.FragmentShader)
             };
             prog = new ShaderProgram(shaders);
             vao.Unbind();

@@ -1,9 +1,7 @@
-#version 430 core
-
 in vec4 Color;
 out vec4 fragCol;
 
-vec4 testFunc();
+//vec4 testFunc();
 
 void main(){
 

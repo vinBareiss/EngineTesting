@@ -6,6 +6,8 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace EngineTesting
 {
+
+   
     public class Shader : OGLHandle
     {
         public Shader(string src, ShaderType type) : base(GL.CreateShader(type)) {
@@ -13,6 +15,19 @@ namespace EngineTesting
             GL.CompileShader(this);
 
             Console.WriteLine(type.ToString() + " : " + GL.GetShaderInfoLog(this));
+        }
+
+        public Shader(string[] src, ShaderType type) : base(GL.CreateShader(type)) {
+            int[] len = new int[src.Length];
+            for (int i = 0; i < src.Length; i++)
+                len[i] = src[i].Length;
+
+            GL.ShaderSource(this, src.Length, src, len);
+            GL.CompileShader(this);
+
+            Console.WriteLine(GL.GetError());
+            Console.WriteLine($"{type.ToString()} : {GL.GetShaderInfoLog(this)}");
+
         }
 
         public static string FromFile(string path) {
