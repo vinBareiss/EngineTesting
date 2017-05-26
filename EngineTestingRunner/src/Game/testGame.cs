@@ -35,22 +35,29 @@ namespace EngineTesting
             GL.Viewport(0, 0, Width, Height);
         }
 
-
+        ParsedObj test;
         protected override void OnLoad(EventArgs e)
         {
+            
+            ObjFile.LoadFile("res/model.obj");
+
             vao = new VertexArray();
 
             vao.Bind();
 
             int vboHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vboHandle);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            //GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, test.Positions.Length * Vector3.SizeInBytes, 
+                          test.Positions, BufferUsageHint.StaticDraw);
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12, 0);
 
             int iboHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, iboHandle);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
+            //GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, test.Indices.Length * sizeof(uint),
+                         test.Indices, BufferUsageHint.StaticDraw);
 
             string[] src = {
                 "#version 430 core\n",
@@ -65,20 +72,26 @@ namespace EngineTesting
             };
             prog = new ShaderProgram(shaders);
             vao.Unbind();
+
+
+            GL.Enable(EnableCap.DepthTest);
         }
 
 
-
+        float t = 0;
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            t += (float)e.Time;
+
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             prog.Use();
-
+            Matrix4 transform = Matrix4.CreateRotationY(t) * Matrix4.CreateRotationZ(20);
+            GL.UniformMatrix4(prog.GetUniformLoc("trans"), false, ref transform);
 
             vao.Bind();
-            GL.DrawElements(BeginMode.Triangles, 3, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(BeginMode.Triangles, test.Indices.Length, DrawElementsType.UnsignedInt, 0);
             vao.Unbind();
 
             prog.UnUse();
