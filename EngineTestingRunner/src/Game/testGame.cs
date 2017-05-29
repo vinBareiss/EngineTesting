@@ -39,7 +39,7 @@ namespace EngineTesting
         protected override void OnLoad(EventArgs e)
         {
             
-            ObjFile.LoadFile("res/model.obj");
+            ObjFile.LoadFile("res/box.obj");
 
             vao = new VertexArray();
 

@@ -187,14 +187,6 @@ namespace EngineTesting
 
     public static class MeshLoader
     {
-
-        public static ParsedObj[] LoadModelFromFile(string path)
-        {
-            return null;
-        }
-
-
-
         public static ParsedObj LoadFile(string path)
         {
             List<string[]> faces = new List<string[]>();
