@@ -133,7 +133,7 @@ namespace EngineTesting
 
                             break;
                         default:
-                            Console.WriteLine($"Disgarded: {line}");
+                            //Console.WriteLine($"Disgarded: {line}");
                             break;
                     }
                 }

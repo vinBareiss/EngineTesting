@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<shading>
+  <functions>
+  </functions>
+
+  <structs>
+    <Transform>
+      struct Transform{
+        mat4 model;
+        mat4 view;
+        mat4 projection;
+
+        mat4 getTransformMatrix{
+          return model * view * projection;
+        }
+      }
+    </Transform>
+  </structs>
+</shading>
