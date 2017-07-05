@@ -92,7 +92,7 @@ namespace EngineTesting
         {
             t += (float)e.Time;
 
-            Transform trans = new Transform(prog);
+            Transform trans = new Transform(new ShaderProgram());
 
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -113,7 +113,7 @@ namespace EngineTesting
             GL.DrawElements(BeginMode.Triangles, test.Indices.Length, DrawElementsType.UnsignedInt, 0);
             vao.Unbind();
 
-            prog.UnUse();
+            //prog.UnUse();
 
             this.SwapBuffers();
         }

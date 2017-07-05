@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Engine\Core\Components\Component.cs" />
     <Compile Include="src\Engine\Core\CoreEngine.cs" />
     <Compile Include="src\Engine\Core\GameObject.cs" />
     <Compile Include="src\Engine\Core\Scenegraph.cs" />
