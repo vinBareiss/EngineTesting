@@ -21,7 +21,7 @@ namespace EngineTestingNrDuo.src.core.components
         /// <summary>
         /// Constructor, start at (0,0,0), rotation (0), scale (1)
         /// </summary>
-        public Transform(GameObject parent) : base(parent)
+        public Transform()
         {
             mModel = Matrix4.Identity;
         }
@@ -34,7 +34,7 @@ namespace EngineTestingNrDuo.src.core.components
         /// <returns></returns>
         public static Transform operator +(Transform org, Transform toAdd)
         {
-            Transform res = new Transform(org.Parent) {
+            Transform res = new Transform() {
                 mModel = org.mModel * toAdd.mModel
             };
             return res;

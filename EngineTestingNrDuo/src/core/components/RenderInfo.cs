@@ -19,13 +19,12 @@ namespace EngineTestingNrDuo.src.core.components
         public VertexArray VAO { get; private set; }
         public int Length { get; private set; }
 
-        public RenderInfo(GameObject gameObject, ShaderProgram shader, VertexArray vao, int length)
-            : base(gameObject)
+        public RenderInfo(ShaderProgram shader, VertexArray vao, int length)
         {
             this.Shader = shader;
             this.VAO = vao;
             this.Length = length;
-
+            
             //Register this RenderInfo with the RenderingEngine so it gets drawn next call
             RenderingEngine.GetInstance().AddRenderInfo(this);
         }

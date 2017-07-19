@@ -10,7 +10,7 @@ struct Transform {
 	}
 }
 
-in vec3 pos;
+in layout (location = 1) vec3 pos;
 out vec3 Col;
 
 uniform Transform transform;

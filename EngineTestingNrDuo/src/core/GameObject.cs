@@ -21,13 +21,23 @@ namespace EngineTestingNrDuo.src.core
             set { mParent = value; }
         }
         public Transform Transform { get { return (Transform)mComponents["transform"]; } }
+        
 
-        public GameObject(GameObject parent) //Reminder: parent = null bei rootObj
+        public GameObject() //Reminder: parent = null bei rootObj
         {
             mChildren = new List<GameObject>();
-            mComponents = new Dictionary<string, Component> {
-                { "transform", new Transform(this) }
+            mComponents = new Dictionary<string, Component>();
+            Transform transform = new Transform() {
+                Parent = this
             };
+            mComponents.Add("transform", transform);
+        
+        }
+
+        public void AddComponent(string name, Component component)
+        {
+            component.Parent = this;
+            mComponents.Add(name, component);
         }
 
         public void Update()

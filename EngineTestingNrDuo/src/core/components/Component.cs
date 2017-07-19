@@ -21,11 +21,8 @@ namespace EngineTestingNrDuo.src.core.components
             set { mParent = value; }
         }
 
-        public Component(GameObject parent)
-        {
-            mParent = parent;
-        }
-        
+        public Component() { }
+
         public virtual void Update() { }
     }
 }

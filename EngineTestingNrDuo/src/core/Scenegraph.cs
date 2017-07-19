@@ -14,7 +14,7 @@ namespace EngineTestingNrDuo.src.core
 
         public Scenegraph()
         {
-            mRootObject = new GameObject(null);
+            mRootObject = new GameObject();
         }
         public void Update()
         {

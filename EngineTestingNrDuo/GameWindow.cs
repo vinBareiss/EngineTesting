@@ -11,6 +11,7 @@ using OpenTK.Graphics.OpenGL4;
 using EngineTestingNrDuo.src.core;
 using EngineTestingNrDuo.src.shading;
 using EngineTestingNrDuo.src.core.buffer;
+using EngineTestingNrDuo.src.core.components;
 
 namespace EngineTestingNrDuo
 {
@@ -46,7 +47,26 @@ namespace EngineTestingNrDuo
             scenegraph = Scenegraph.GetInstance();
             renderengine = RenderingEngine.GetInstance();
 
-            GameObject planeObj = new GameObject()
+            VertexArray vao = new VertexArray();
+            vao.Bind();
+
+            VertexBuffer<float> Vbo = new VertexBuffer<float>();
+            Vbo.Bind();
+            Vbo.BufferData(vertices);
+            Vbo.SetVertexAttribPointer(1, 3, VertexAttribPointerType.Float,
+                                       false, 12, 0);
+
+            IndexBuffer ibo = new IndexBuffer();
+            ibo.Bind();
+            ibo.BufferData(indices);
+
+            vao.Unbind();
+            
+
+
+            GameObject planeObj = new GameObject();
+            RenderInfo planeInfo = new RenderInfo(UnlitShader.GetInstance(), vao, indices.Length);
+            planeObj.AddComponent("renderInfo", planeInfo);
         }
 
         /// <summary>
@@ -58,6 +78,7 @@ namespace EngineTestingNrDuo
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            renderengine.Render();
 
             this.SwapBuffers();
             base.OnRenderFrame(e);
