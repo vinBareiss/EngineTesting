@@ -69,9 +69,10 @@
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <None Include="res\shaders\unlit_vertex.glsl" />
+    <None Include="res\shaders\unlit_fragment.glsl" />
+    <None Include="res\shaders\copyThis.glsl" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="res\shaders\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

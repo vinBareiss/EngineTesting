@@ -29,7 +29,9 @@ namespace EngineTestingNrDuo.src.shading
 
         public override void UpdateUniforms(GameObject gameObject)
         {
-            SetUniform("transform.model", gameObject.Transform.Model);
+            SetUniform("transform.model", OpenTK.Matrix4.Identity);
+            SetUniform("transform.view", OpenTK.Matrix4.Identity);
+            SetUniform("transform.projection", OpenTK.Matrix4.Identity);
             //TODO: camera class, proj + view mat4
         }
     }

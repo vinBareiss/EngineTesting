@@ -8,6 +8,10 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 
+using EngineTestingNrDuo.src.core;
+using EngineTestingNrDuo.src.shading;
+using EngineTestingNrDuo.src.core.buffer;
+
 namespace EngineTestingNrDuo
 {
     class GameWindow : OpenTK.GameWindow
@@ -21,7 +25,6 @@ namespace EngineTestingNrDuo
             Console.WriteLine("OpenGl: " + GL.GetString(StringName.Version));
             Console.WriteLine("GLSL: " + GL.GetString(StringName.ShadingLanguageVersion));
         }
-
         float[] vertices = {0.5f, 0.5f, 0.0f,
                    0.5f, -0.5f, 0.0f,
                    -0.5f, 0.5f, 0.0f,
@@ -30,13 +33,20 @@ namespace EngineTestingNrDuo
         uint[] indices = { 1, 0, 2,
                            2, 3, 1 };
 
+        Scenegraph scenegraph;
+        RenderingEngine renderengine;
+               
+
         /// <summary>
         /// Wird beim Start aufgerufen
         /// </summary>
         /// <param name="e"></param>
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
+            scenegraph = Scenegraph.GetInstance();
+            renderengine = RenderingEngine.GetInstance();
+
+            GameObject planeObj = new GameObject()
         }
 
         /// <summary>
