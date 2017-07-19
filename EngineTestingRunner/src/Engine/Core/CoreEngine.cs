@@ -15,8 +15,8 @@ namespace EngineTesting.src.Engine.Core
 
 
         public CoreEngine() {
-            scenegraph = new Scenegraph();
-            renderingEngine = new RenderingEngine();
+            scenegraph = Scenegraph.Instance;
+            //renderingEngine = new RenderingEngine();
         }
 
                

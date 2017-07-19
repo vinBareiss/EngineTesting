@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace EngineTesting.src.Engine.Core
 {
-    class Scenegraph
+    class Scenegraph : Singelton<Scenegraph>
     {
+        GameObject rootObject = null;
+
+        /// <summary>
+        /// Initialize Scenegraph
+        /// </summary>
+        public Scenegraph()
+        {
+            //make root object, all other objects will be a child of this object
+            rootObject = new GameObject();
+        }
+
+
+        public void Update()
+        {
+            //rootObject.Update();
+        }
     }
 }
