@@ -9,6 +9,16 @@ namespace EngineTestingNrDuo.src.core
 {
     sealed class Scenegraph : Singelton<Scenegraph>
     {
-        
+        GameObject mRootObject = null;
+
+
+        public Scenegraph()
+        {
+            mRootObject = new GameObject(null);
+        }
+        public void Update()
+        {
+            mRootObject.Update();
+        }
     }
 }

@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 using OpenTK.Graphics.OpenGL4;
 using EngineTestingNrDuo.src.util;
+using EngineTestingNrDuo.src.core;
+
 
 namespace EngineTestingNrDuo.src.shading
 {
+    /// <summary>
+    /// Very simple shader, no lighting calculations at all. For testing puropses mostly.
+    /// </summary>
     class UnlitShader : ShaderProgram
     {
         public UnlitShader() : base()
@@ -22,7 +27,10 @@ namespace EngineTestingNrDuo.src.shading
             AddUniform("transform.view");
         }
 
-
-
+        public override void UpdateUniforms(GameObject gameObject)
+        {
+            SetUniform("transform.model", gameObject.Transform.Model);
+            //TODO: camera class, proj + view mat4
+        }
     }
 }

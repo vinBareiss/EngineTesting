@@ -47,10 +47,17 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="res\models\Teapot.cs" />
+    <Compile Include="src\core\buffer\Buffer.cs" />
+    <Compile Include="src\core\buffer\IndexBuffer.cs" />
+    <Compile Include="src\core\buffer\VertexArray.cs" />
+    <Compile Include="src\core\buffer\VertexBuffer.cs" />
     <Compile Include="src\core\components\Component.cs" />
+    <Compile Include="src\core\components\RenderInfo.cs" />
     <Compile Include="src\core\components\Transform.cs" />
     <Compile Include="src\core\GameObject.cs" />
-    <Compile Include="src\core\GameWindow.cs" />
+    <Compile Include="GameWindow.cs" />
+    <Compile Include="src\core\RenderingEngine.cs" />
     <Compile Include="src\core\Scenegraph.cs" />
     <Compile Include="src\shading\ShaderProgram.cs" />
     <Compile Include="src\shading\UnlitShader.cs" />

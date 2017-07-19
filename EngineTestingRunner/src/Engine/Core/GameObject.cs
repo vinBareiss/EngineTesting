@@ -27,5 +27,9 @@ namespace EngineTesting.src.Engine.Core
 
         }
 
+        internal void Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
