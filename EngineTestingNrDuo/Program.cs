@@ -14,6 +14,7 @@ namespace EngineTestingNrDuo
     {
         static void Main(string[] args)
         {
+            new src.core.GameWindow().Run(60);
            
         }
     }
