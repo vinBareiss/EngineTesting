@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using EngineTestingNrDuo.src.core;
-
-using OpenTK;
 
 namespace EngineTestingNrDuo
 {
@@ -14,7 +6,7 @@ namespace EngineTestingNrDuo
     {
         static void Main(string[] args)
         {
-           
+            new GameWindow().Run(60);
         }
     }
 }

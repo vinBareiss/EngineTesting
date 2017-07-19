@@ -9,18 +9,20 @@ using EngineTestingNrDuo.src.core.components;
 namespace EngineTestingNrDuo.src.core
 {
     class GameObject
-    {
-        Dictionary<string, Component> mComponents;
-        List<GameObject> mChildren;
+    {      
         GameObject mParent;
+        List<GameObject> mChildren;
+
+        Dictionary<string, Component> mComponents;
+
         public GameObject Parent
         {
             get { return mParent; }
             set { mParent = value; }
         }
+        public Transform Transform { get { return (Transform)mComponents["transform"]; } }
 
-
-        public GameObject()
+        public GameObject(GameObject parent) //Reminder: parent = null bei rootObj
         {
             mChildren = new List<GameObject>();
             mComponents = new Dictionary<string, Component> {
@@ -31,7 +33,7 @@ namespace EngineTestingNrDuo.src.core
         public void Update()
         {
             //TODO: Update local transform
-            
+
             //update this
             foreach (Component component in mComponents.Values) {
                 component.Update();

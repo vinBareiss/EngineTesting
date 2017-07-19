@@ -11,6 +11,9 @@ namespace EngineTestingNrDuo.src.core.components
     /// </summary>
     abstract class Component
     {
+        /// <summary>
+        /// Gameobject this component is assigned to. Field and Public Property
+        /// </summary>
         private GameObject mParent;
         public GameObject Parent
         {

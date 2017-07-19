@@ -16,13 +16,13 @@ namespace EngineTesting.src.Engine.Core
         public Scenegraph()
         {
             //make root object, all other objects will be a child of this object
-            rootObject = new GameObject();
+            rootObject = new GameObject(null);
         }
 
 
         public void Update()
         {
-            //rootObject.Update();
-        }
+
+                   }
     }
 }
