@@ -1,9 +1,9 @@
-﻿#version 450
+﻿#version 430
 
 layout (location = 1) in vec3 pos;
 
 uniform mat4 transform;
 
 void main(){
-	gl_Position = vec4(pos, 1.0) * transform;
+	gl_Position = transform *  vec4(pos, 1.0) ;
 }

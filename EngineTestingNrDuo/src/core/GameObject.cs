@@ -12,17 +12,16 @@ namespace EngineTestingNrDuo.src.core
     {      
         GameObject mParent;
         List<GameObject> mChildren;
-
         Dictionary<string, Component> mComponents;
-        public Dictionary<string, Component> Components { get { return mComponents; } }
 
+        public Dictionary<string, Component> Components { get { return mComponents; } }     
         public GameObject Parent
         {
             get { return mParent; }
             set { mParent = value; }
         }
-        public Transform Transform { get { return (Transform)mComponents["transform"]; } }
-        
+        public Transform Transform { get { return (Transform)Components["transform"]; } }
+        public List<GameObject> Children { get { return mChildren; } }
 
         public GameObject() //Reminder: parent = null bei rootObj
         {

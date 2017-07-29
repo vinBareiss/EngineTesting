@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 
 using OpenTK.Graphics.OpenGL4;
+using OpenTK;
+
+using EngineTestingNrDuo.src.core.components;
 using EngineTestingNrDuo.src.util;
 using EngineTestingNrDuo.src.core;
 
@@ -40,7 +43,12 @@ namespace EngineTestingNrDuo.src.shading
 
         public override void UpdateUniforms(GameObject gameObject)
         {
-            SetUniform("transform", gameObject.Components["transform"] * Camera.GetInstance().);
+            Matrix4 view = Camera.GetInstance().ViewMatrix;
+            Matrix4 proj = Camera.GetInstance().ProjectionMatrix;
+            Matrix4 model = Matrix4.Identity;
+            Matrix4 test = model * view * proj;
+
+            SetUniform("transform",test ,false);
             /*SetUniform("transform.view", OpenTK.Matrix4.Identity);
             SetUniform("transform.projection", OpenTK.Matrix4.Identity);*/
             //TODO: camera class, proj + view mat4

@@ -39,8 +39,9 @@ namespace EngineTestingNrDuo
         uint[] indices = { 0,1,2,
                            0,1,3};
 
+        CoreEngine coreEngine;
         Scenegraph scenegraph;
-        RenderingEngine renderengine;
+        RenderingEngine renderingEngine;
 
 
         /// <summary>
@@ -49,8 +50,10 @@ namespace EngineTestingNrDuo
         /// <param name="e">asd</param>
         protected override void OnLoad(EventArgs e)
         {
+            coreEngine = CoreEngine.GetInstance();
             scenegraph = Scenegraph.GetInstance();
-            renderengine = RenderingEngine.GetInstance();
+            renderingEngine = RenderingEngine.GetInstance();
+
 
             VertexArray vao = new VertexArray();
             vao.Bind();
@@ -67,11 +70,13 @@ namespace EngineTestingNrDuo
 
             vao.Unbind();
 
-
-
+            
             GameObject planeObj = new GameObject();
+            scenegraph.Root.Children.Add(planeObj);
             RenderInfo planeInfo = new RenderInfo(UnlitShader.GetInstance(), vao, indices.Length);
             planeObj.AddComponent("renderInfo", planeInfo);
+
+            coreEngine.Start(this);
         }
 
         /// <summary>
@@ -83,12 +88,12 @@ namespace EngineTestingNrDuo
         {
             t += (float)e.Time;
             //test
-            scenegraph.Root.Transform.Model *= Matrix4.CreateRotationZ(t);
+            Scenegraph.GetInstance().Root.Transform.Model *= Matrix4.CreateRotationZ(t);
 
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            renderengine.Render();
+            RenderingEngine.GetInstance().Render();
             this.SwapBuffers();
             base.OnRenderFrame(e);
         }

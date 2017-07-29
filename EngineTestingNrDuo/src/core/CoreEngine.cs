@@ -27,7 +27,17 @@ namespace EngineTestingNrDuo.src.core
         {
             renderEngine = RenderingEngine.GetInstance();
             sceneGraph = Scenegraph.GetInstance();
-            Camera = new Camera()
+            camera = Camera.GetInstance();
+        }
+
+        public void Start(GameWindow w)
+        {
+            camera.Start(w);
+        }
+
+        public void Stop()
+        {
+            throw new System.NotImplementedException();
         }
 
     }

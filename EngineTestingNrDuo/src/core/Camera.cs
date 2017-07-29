@@ -11,24 +11,76 @@ namespace EngineTestingNrDuo.src.core
 {
     class Camera
     {
-        Vector3 mPosition, mFront, mUp;
-        float mLookSpeed, mMoveSpeed, mPitch, mYaw, mFov, mAspect;
+        #region Singelton
+        static Camera Instance;
+        public static Camera GetInstance()
+        {
+            if (Camera.Instance == null)
+                return Instance = new Camera();
+            else
+                return Instance;
+        }
+        #endregion
+
+
+        //fields
+        private Vector3 mPosition;
+        private Vector3 mFront;
+        private Vector3 mUp;
+
+        float mLookSpeed;
+        float mMoveSpeed;
+        float mPitch, mYaw;
+        float mFov;
+        float mAspect;
 
         private Matrix4 mViewMatrix;
+        private Matrix4 mProjectionMatrix;
+
+        //properties
         public Matrix4 ViewMatrix
         {
             get { return mViewMatrix; }
         }
-
-        private Matrix4 mProjectionMatrix;
         public Matrix4 ProjectionMatrix
         {
             get { return mProjectionMatrix; }
         }
 
+        public Vector3 Position { set { mPosition = value; } }
+        public float MoveSpeed { set { mMoveSpeed = value; } }
+        public float LookSpeed { set { mLookSpeed = value; } }
+        public float FOV { set { mFov = value; } }
+
+
         bool[] mKeys;
 
-        public Camera(GameWindow w, Vector3 startPos, Vector3 startLook, float moveSpeed, float lookSpeed, float fov)
+        public Camera()
+        {
+            mKeys = new bool[265];
+            //set default values
+            mUp = new Vector3(0, 1, 0);
+            mPosition = new Vector3(1, 1, 1);
+            mFov = 45;
+            //start of by looking at the center
+            
+        }
+        //start the cam
+        public void Start(GameWindow w)
+        {
+            //setup matrices
+            mAspect = w.Width / w.Height;
+            mProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(mFov), mAspect, 0.1f, 100.0f);
+            mViewMatrix = Matrix4.LookAt(mPosition, mPosition + mFront, mUp);
+            //event handlers
+            w.KeyUp += KeyUp;
+            w.KeyDown += KeyDown;
+            w.MouseMove += MouseMove;
+            w.MouseWheel += MouseWheelChange;
+            w.UpdateFrame += TargetUpdateFrame;
+        }
+
+        /*public Camera(GameWindow w, Vector3 startPos, Vector3 startLook, float moveSpeed, float lookSpeed, float fov)
         {
             mMoveSpeed = moveSpeed;
             mLookSpeed = lookSpeed;
@@ -42,8 +94,7 @@ namespace EngineTestingNrDuo.src.core
             mViewMatrix = Matrix4.LookAt(mPosition, mPosition + mFront, mUp);
             mFov = fov;
             mAspect = w.Width / w.Height;
-            mProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(mFov), mAspect, 0.1f, 100.0f);
-
+            
             //add eventhandlers for the given window (thx for that openTk)
             w.KeyUp += KeyUp;
             w.KeyDown += KeyDown;
@@ -55,6 +106,7 @@ namespace EngineTestingNrDuo.src.core
 
             mKeys = new bool[1024];
         }
+        */
 
         bool debug_printInfo = true;
         private void TargetUpdateFrame(object sender, FrameEventArgs e)
@@ -132,9 +184,12 @@ namespace EngineTestingNrDuo.src.core
             mKeys[(int)e.Key] = false;
         }
 
-        private void LookAt(Vector3 startLook)
+        public void LookAt(Vector3 lookAt)
         {
-            throw new NotImplementedException();
+            Vector3 lookDir = Vector3.Normalize(lookAt - mPosition);
+            mFront = lookDir;
+            mPitch = (float)MathHelper.RadiansToDegrees(Math.Asin(lookDir.Y));
+            mYaw = (float)MathHelper.RadiansToDegrees(Math.Atan2(-lookDir.X, lookDir.Z)) + 90;
         }
     }
 }

@@ -51,16 +51,18 @@ namespace EngineTestingNrDuo.src.core
             //value = list<renderInfo>
             foreach (KeyValuePair<ShaderProgram, List<RenderInfo>> batch in mRenderRegistry) {
                 //use this shader
-                batch.Key.Use();
+                ShaderProgram shader = batch.Key;
+                List<RenderInfo> renderInfos = batch.Value;
+                shader.Use();
                 //for all renderinfos, belonging to this shader
-                foreach (RenderInfo renderInfo in batch.Value) { 
+                foreach (RenderInfo renderInfo in renderInfos) { 
                     //TODO: batch by vao (big change)
                     renderInfo.VAO.Bind(); //bind the vao
-                    batch.Key.UpdateUniforms(renderInfo.Parent); //apply transforms, etc
+                    shader.UpdateUniforms(renderInfo.Parent); //apply transforms, etc
                     GL.DrawElements(renderInfo.Mode, renderInfo.Length, DrawElementsType.UnsignedInt, 0);
                     renderInfo.VAO.Unbind();
                 }
-                batch.Key.UnUse();
+                shader.UnUse();
             }
         }
     }
