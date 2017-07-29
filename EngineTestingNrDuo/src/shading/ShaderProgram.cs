@@ -12,18 +12,18 @@ using EngineTestingNrDuo.src.core;
 
 namespace EngineTestingNrDuo.src.shading
 {
-    class ShaderProgram : Singelton<ShaderProgram>
+    abstract class ShaderProgram : OpenGlHandle
     {
         List<int> mShaders;
-        int mHandle = -1;
-        public int Handle { get { return mHandle; } }
-
         private Dictionary<string, int> mUniforms;
+        /// <summary>
+        /// We use this name for sorting all rendercalls by shader
+        /// 
+        /// </summary>
+        public string Name { get { return this.GetType().Name; } }
 
-
-        public ShaderProgram()
+        public ShaderProgram() : base(GL.CreateProgram())
         {
-            mHandle = GL.CreateProgram();
             mShaders = new List<int>();
             mUniforms = new Dictionary<string, int>();
         }
@@ -44,11 +44,13 @@ namespace EngineTestingNrDuo.src.shading
         /// <param name="type">type of shader</param>
         private void AddShader(string text, ShaderType type)
         {
-            int handle = GL.CreateShader(ShaderType.VertexShader);
+            int handle = GL.CreateShader(type);
             GL.ShaderSource(handle, text);
+
             GL.CompileShader(handle);
-            if (!string.IsNullOrWhiteSpace(GL.GetShaderInfoLog(handle))) {
-                throw new ApplicationException("Shader compilation failed");
+            GL.GetShader(handle, ShaderParameter.CompileStatus, out int statusCode);
+            if (statusCode == 0) {
+                throw new ApplicationException("Shader compilation failed", new Exception(GL.GetShaderInfoLog(handle)));
             }
             mShaders.Add(handle);
         }
@@ -60,8 +62,12 @@ namespace EngineTestingNrDuo.src.shading
             }
 
             GL.LinkProgram(this);
-            if (!String.IsNullOrWhiteSpace(GL.GetProgramInfoLog(this))) {
-                throw new ApplicationException("Program linking failed");
+            GL.ValidateProgram(this);
+
+            GL.GetProgram(this, GetProgramParameterName.LinkStatus, out int statusCode);
+
+            if (statusCode == 0) {
+                throw new ApplicationException("Program linking failed", new Exception(GL.GetProgramInfoLog(this)));
             }
 
             foreach (int shaderHandle in mShaders) {
@@ -73,7 +79,7 @@ namespace EngineTestingNrDuo.src.shading
         {
             int loc = GL.GetUniformLocation(this, name);
             if (loc == -1)
-                throw new ApplicationException("Unknown Uniform");
+                throw new ApplicationException($"Unknown Uniform: {name}");
             mUniforms.Add(name, loc);
         }
         public virtual void UpdateUniforms(GameObject gameObject) { }
@@ -92,16 +98,6 @@ namespace EngineTestingNrDuo.src.shading
         protected void SetUniform(string name, float value)
         {
             GL.Uniform1(mUniforms[name], value);
-        }
-
-
-        /// <summary>
-        /// Allows for implicit cast of derived type to its handle
-        /// </summary>
-        /// <param name="prop"></param>
-        public static implicit operator int(ShaderProgram prop)
-        {
-            return prop.mHandle;
         }
 
         /// <summary>

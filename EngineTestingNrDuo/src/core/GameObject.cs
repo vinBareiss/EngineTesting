@@ -14,6 +14,7 @@ namespace EngineTestingNrDuo.src.core
         List<GameObject> mChildren;
 
         Dictionary<string, Component> mComponents;
+        public Dictionary<string, Component> Components { get { return mComponents; } }
 
         public GameObject Parent
         {

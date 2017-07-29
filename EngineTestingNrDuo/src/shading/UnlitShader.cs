@@ -17,21 +17,32 @@ namespace EngineTestingNrDuo.src.shading
     /// </summary>
     class UnlitShader : ShaderProgram
     {
+        #region "Singelton"
+        private static UnlitShader mInstance = null;
+        public static UnlitShader GetInstance()
+        {
+            if (mInstance == null)
+                return mInstance = new UnlitShader();
+            else
+                return mInstance;
+        }
+        #endregion
+
         public UnlitShader() : base()
         {
-            AddVertexShader(ResourceLoader.LoadShader("res/shaders/unlit_vertext.glsl"));
+            AddVertexShader(ResourceLoader.LoadShader("res/shaders/unlit_vertex.glsl"));
             AddFragmentShader(ResourceLoader.LoadShader("res/shaders/unlit_fragment.glsl"));
-
-            AddUniform("transform.model");
-            AddUniform("transform.projection");
-            AddUniform("transform.view");
+            Compile();
+            AddUniform("transform");
+            /*AddUniform("transform.projection");
+            AddUniform("transform.view");*/
         }
 
         public override void UpdateUniforms(GameObject gameObject)
         {
-            SetUniform("transform.model", OpenTK.Matrix4.Identity);
-            SetUniform("transform.view", OpenTK.Matrix4.Identity);
-            SetUniform("transform.projection", OpenTK.Matrix4.Identity);
+            SetUniform("transform", gameObject.Components["transform"] * Camera.GetInstance().);
+            /*SetUniform("transform.view", OpenTK.Matrix4.Identity);
+            SetUniform("transform.projection", OpenTK.Matrix4.Identity);*/
             //TODO: camera class, proj + view mat4
         }
     }

@@ -1,21 +1,9 @@
-﻿#version 430 core
+﻿#version 450
 
-struct Transform {
-	Mat4 view;
-	Mat4 projection;
-	Mat4 model;
+layout (location = 1) in vec3 pos;
 
-	mat4 getTransformMatrix(){
-		return model * view * projection;
-	}
-}
-
-in layout (location = 1) vec3 pos;
-out vec3 Col;
-
-uniform Transform transform;
+uniform mat4 transform;
 
 void main(){
-	gl_position = pos * transform.getTransformMatrix();
-	Col = vec3(1.0, 1.0, 1.0, 1.0);
+	gl_Position = vec4(pos, 1.0) * transform;
 }

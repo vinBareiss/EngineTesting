@@ -1,8 +1,13 @@
-﻿using OpenTK;
-using OpenTK.Input;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EngineTesting
+using OpenTK;
+using OpenTK.Input;
+
+namespace EngineTestingNrDuo.src.core
 {
     class Camera
     {
@@ -22,7 +27,6 @@ namespace EngineTesting
         }
 
         bool[] mKeys;
-
 
         public Camera(GameWindow w, Vector3 startPos, Vector3 startLook, float moveSpeed, float lookSpeed, float fov)
         {
@@ -51,20 +55,6 @@ namespace EngineTesting
 
             mKeys = new bool[1024];
         }
-
-        //two small helperfunctions to controll the camera externaly
-        public void LookAt(Vector3 lookAt)
-        {
-            Vector3 lookDir = Vector3.Normalize(lookAt - mPosition);
-            mFront = lookDir;
-            mPitch = (float)MathHelper.RadiansToDegrees(Math.Asin(lookDir.Y));
-            mYaw = (float)MathHelper.RadiansToDegrees(Math.Atan2(-lookDir.X, lookDir.Z)) + 90;
-        }
-        public void MoveTo(Vector3 movePosition)
-        {
-            mPosition = movePosition;
-        }
-
 
         bool debug_printInfo = true;
         private void TargetUpdateFrame(object sender, FrameEventArgs e)
@@ -95,14 +85,15 @@ namespace EngineTesting
 
             mViewMatrix = Matrix4.LookAt(mPosition, mPosition + mFront, mUp);
 
+
         }
 
         private void MouseWheelChange(object sender, MouseWheelEventArgs e)
         {
             mFov += e.Delta;
             mProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(mFov), mAspect, 0.1f, 100.0f);
-        }
 
+        }
         private void MouseMove(object sender, MouseMoveEventArgs e)
         {
             //only move the camera if mouse1 is pressed
@@ -139,6 +130,11 @@ namespace EngineTesting
         private void KeyUp(object sender, KeyboardKeyEventArgs e)
         {
             mKeys[(int)e.Key] = false;
+        }
+
+        private void LookAt(Vector3 startLook)
+        {
+            throw new NotImplementedException();
         }
     }
 }

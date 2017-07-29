@@ -7,10 +7,21 @@ using EngineTestingNrDuo.src.util;
 
 namespace EngineTestingNrDuo.src.core
 {
-    sealed class Scenegraph : Singelton<Scenegraph>
+    sealed class Scenegraph
     {
-        GameObject mRootObject = null;
+        #region "Singelton"
+        private static Scenegraph mInstance = null;
+        public static Scenegraph GetInstance()
+        {
+            if (mInstance == null)
+                return mInstance = new Scenegraph();
+            else
+                return mInstance;
+        }
+        #endregion
 
+        GameObject mRootObject = null;
+        public GameObject Root { get { return mRootObject; } }
 
         public Scenegraph()
         {
