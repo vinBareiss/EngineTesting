@@ -60,8 +60,11 @@ namespace EngineTestingNrDuo.src.core
             mKeys = new bool[265];
             //set default values
             mUp = new Vector3(0, 1, 0);
-            mPosition = new Vector3(1, 1, 1);
+            mPosition = new Vector3(0,0, 1);
             mFov = 45;
+
+            mMoveSpeed = 0.05f;
+            mLookSpeed = 0.2f;
             //start of by looking at the center
             
         }

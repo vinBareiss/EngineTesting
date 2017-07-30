@@ -43,12 +43,11 @@ namespace EngineTestingNrDuo.src.shading
 
         public override void UpdateUniforms(GameObject gameObject)
         {
-            Matrix4 view = Camera.GetInstance().ViewMatrix;
-            Matrix4 proj = Camera.GetInstance().ProjectionMatrix;
-            Matrix4 model = Matrix4.Identity;
-            Matrix4 test = model * view * proj;
+            //get cam for rast
+            Camera cam = Camera.GetInstance();
+          
 
-            SetUniform("transform",test ,false);
+            SetUniform("transform", , false);
             /*SetUniform("transform.view", OpenTK.Matrix4.Identity);
             SetUniform("transform.projection", OpenTK.Matrix4.Identity);*/
             //TODO: camera class, proj + view mat4

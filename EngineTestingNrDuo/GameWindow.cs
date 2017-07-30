@@ -76,6 +76,8 @@ namespace EngineTestingNrDuo
             RenderInfo planeInfo = new RenderInfo(UnlitShader.GetInstance(), vao, indices.Length);
             planeObj.AddComponent("renderInfo", planeInfo);
 
+
+            Camera.GetInstance().LookAt(new Vector3(0));
             coreEngine.Start(this);
         }
 
