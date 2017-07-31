@@ -158,13 +158,18 @@ namespace EngineTestingNrDuo.src.util
         public Vector3[] Positions;
         public Vector2[] UvCoords;
         public Vector3[] Normals;
+        
+        public bool hasUv;
+        public bool hasNormal;
 
         public ParsedObj(uint[] indices, Vector3[] positions, Vector2[] uvCoords, Vector3[] normals)
         {
             this.Indices = indices;
             this.Positions = positions;
             this.UvCoords = uvCoords;
+            hasUv = !(uvCoords == null);
             this.Normals = normals;
+            hasNormal = !(normals == null);
         }
     }
 }
