@@ -32,13 +32,12 @@ namespace EngineTestingNrDuo.src.core.components
         /// <param name="org"></param>
         /// <param name="toAdd"></param>
         /// <returns></returns>
-        public static Transform operator +(Transform org, Transform toAdd)
+        public static Transform operator +(Transform org, Transform add)
         {
-            Transform res = new Transform() {
-                mModel = org.mModel * toAdd.mModel
+            Matrix4 mat = org.mModel * add.mModel;
+            return new Transform() {
+                mModel = mat
             };
-            return res;
         }
-
     }
 }

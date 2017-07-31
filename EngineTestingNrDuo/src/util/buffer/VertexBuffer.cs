@@ -2,7 +2,7 @@
 
 using OpenTK.Graphics.OpenGL4;
 
-namespace EngineTestingNrDuo.src.core.buffer
+namespace EngineTestingNrDuo.src.util.buffer
 {
     class VertexBuffer<T> : Buffer
     where T : struct

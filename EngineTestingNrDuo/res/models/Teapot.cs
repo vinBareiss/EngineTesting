@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace EngineTestingNrDuo.res.models
 {
-    class Teapot
+    class Teapot : Model
     {
+        
     }
 }

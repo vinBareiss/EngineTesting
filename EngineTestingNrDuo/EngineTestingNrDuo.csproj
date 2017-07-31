@@ -87,11 +87,13 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="res\models\Box.cs" />
+    <Compile Include="res\models\Model.cs" />
     <Compile Include="res\models\Teapot.cs" />
-    <Compile Include="src\core\buffer\Buffer.cs" />
-    <Compile Include="src\core\buffer\IndexBuffer.cs" />
-    <Compile Include="src\core\buffer\VertexArray.cs" />
-    <Compile Include="src\core\buffer\VertexBuffer.cs" />
+    <Compile Include="src\util\buffer\Buffer.cs" />
+    <Compile Include="src\util\buffer\IndexBuffer.cs" />
+    <Compile Include="src\util\buffer\VertexArray.cs" />
+    <Compile Include="src\util\buffer\VertexBuffer.cs" />
     <Compile Include="src\core\Camera.cs" />
     <Compile Include="src\core\components\Component.cs" />
     <Compile Include="src\core\components\RenderInfo.cs" />
@@ -111,6 +113,9 @@
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <None Include="res\models\Box.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="res\shaders\unlit_vertex.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -119,6 +124,5 @@
     </None>
     <None Include="res\shaders\copyThis.glsl" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -19,13 +19,14 @@ namespace EngineTestingNrDuo.src.core
                 return mInstance;
         }
         #endregion
-
+        
         GameObject mRootObject = null;
         public GameObject Root { get { return mRootObject; } }
 
         public Scenegraph()
         {
             mRootObject = new GameObject();
+            mRootObject.Parent = null;
         }
         public void Update()
         {

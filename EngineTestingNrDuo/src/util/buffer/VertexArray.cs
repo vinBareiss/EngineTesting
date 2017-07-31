@@ -2,7 +2,7 @@
 
 using OpenTK.Graphics.OpenGL4;
 
-namespace EngineTestingNrDuo.src.core.buffer
+namespace EngineTestingNrDuo.src.util.buffer
 {
     class VertexArray : Buffer
     {

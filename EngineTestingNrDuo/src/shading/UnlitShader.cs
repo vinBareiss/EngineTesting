@@ -45,9 +45,8 @@ namespace EngineTestingNrDuo.src.shading
         {
             //get cam for rast
             Camera cam = Camera.GetInstance();
-          
-
-            SetUniform("transform", , false);
+         
+            SetUniform("transform", gameObject.Transform.Model * cam.ViewMatrix * cam.ProjectionMatrix, false);
             /*SetUniform("transform.view", OpenTK.Matrix4.Identity);
             SetUniform("transform.projection", OpenTK.Matrix4.Identity);*/
             //TODO: camera class, proj + view mat4

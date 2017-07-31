@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL4;
 
 using EngineTestingNrDuo.src.shading;
-using EngineTestingNrDuo.src.core.buffer;
+using EngineTestingNrDuo.src.util.buffer;
 
 
 namespace EngineTestingNrDuo.src.core.components

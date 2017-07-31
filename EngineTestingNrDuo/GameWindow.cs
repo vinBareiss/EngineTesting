@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL4;
 
 using EngineTestingNrDuo.src.core;
 using EngineTestingNrDuo.src.shading;
-using EngineTestingNrDuo.src.core.buffer;
+using EngineTestingNrDuo.src.util.buffer;
 using EngineTestingNrDuo.src.core.components;
 
 namespace EngineTestingNrDuo
@@ -72,10 +72,10 @@ namespace EngineTestingNrDuo
 
             
             GameObject planeObj = new GameObject();
-            scenegraph.Root.Children.Add(planeObj);
             RenderInfo planeInfo = new RenderInfo(UnlitShader.GetInstance(), vao, indices.Length);
             planeObj.AddComponent("renderInfo", planeInfo);
 
+            scenegraph.Root.AddChild(planeObj);
 
             Camera.GetInstance().LookAt(new Vector3(0));
             coreEngine.Start(this);
@@ -90,14 +90,20 @@ namespace EngineTestingNrDuo
         {
             t += (float)e.Time;
             //test
-            Scenegraph.GetInstance().Root.Transform.Model *= Matrix4.CreateRotationZ(t);
+            scenegraph.Root.Transform.Model *= Matrix4.CreateRotationZ((float)Math.Sin(t/10));
 
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            RenderingEngine.GetInstance().Render();
+            renderingEngine.Render();
+
             this.SwapBuffers();
             base.OnRenderFrame(e);
+        }
+
+        protected override void OnUpdateFrame(FrameEventArgs e)
+        {
+            coreEngine.Update();
         }
     }
 }

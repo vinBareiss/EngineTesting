@@ -37,7 +37,12 @@ namespace EngineTestingNrDuo.src.core
 
         public void Stop()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public void Update() {
+            camera.Update();
+            sceneGraph.Update();
         }
 
     }

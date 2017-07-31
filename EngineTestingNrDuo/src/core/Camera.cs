@@ -80,7 +80,6 @@ namespace EngineTestingNrDuo.src.core
             w.KeyDown += KeyDown;
             w.MouseMove += MouseMove;
             w.MouseWheel += MouseWheelChange;
-            w.UpdateFrame += TargetUpdateFrame;
         }
 
         /*public Camera(GameWindow w, Vector3 startPos, Vector3 startLook, float moveSpeed, float lookSpeed, float fov)
@@ -112,7 +111,7 @@ namespace EngineTestingNrDuo.src.core
         */
 
         bool debug_printInfo = true;
-        private void TargetUpdateFrame(object sender, FrameEventArgs e)
+        public void Update()
         {
             if (mKeys[(int)Key.E] == true && debug_printInfo) {
                 //print debug info
