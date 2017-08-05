@@ -7,21 +7,10 @@ namespace EngineTesting
     {
         static void Main(string[] args) {
 
-            // new TestGame().Run(60);
-            string test = "test";
-            A a = new A();
-
-            a.value = test;
-
-            test = "test2";
+            new TestGame().Run(60);
+            
 
             
         }
-    }
-
-    class A
-    {
-        public string value;
-    }
-     
+    }    
 }

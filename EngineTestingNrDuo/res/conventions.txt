@@ -1,0 +1,6 @@
+﻿GLSL:
+position Location = 1
+uvCoord Location = 2
+normal  Location = 3
+
+	

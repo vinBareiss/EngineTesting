@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OpenTK.Graphics.OpenGL4;
+using System.Diagnostics;
 
 namespace EngineTesting.src.Engine.Shader
 {
@@ -13,7 +14,8 @@ namespace EngineTesting.src.Engine.Shader
     {
 
 
-        public Shader(ShaderType type, string[] sources) : base(GL.CreateShader(type)) {
+        public Shader(ShaderType type, string[] sources) : base(GL.CreateShader(type))
+        {
             //get all shader lengths
             int[] lengths = new int[sources.Length];
             for (int i = 0; i < sources.Length; i++)
@@ -27,10 +29,19 @@ namespace EngineTesting.src.Engine.Shader
 
             //check of error
             string infoLog = GL.GetShaderInfoLog(this);
-            if (!string.IsNullOrWhiteSpace(infoLog))
-                throw new ApplicationException("Shader compilation Failed");
-            
-
+            if (!string.IsNullOrWhiteSpace(infoLog)) {
+                StringBuilder sb = new StringBuilder();
+                int i = 0;
+                foreach (string src in sources) {
+                    foreach (string line in src.Split('\n')) {
+                        if (string.IsNullOrWhiteSpace(line))
+                            continue;
+                        sb.Append(i++.ToString() + ":    " + line + '\n');
+                    }
+                }
+                Debug.WriteLine(sb.ToString());
+                throw new ApplicationException("Shader compilation Failed", new Exception(infoLog));
+            }
         }
     }
 }

@@ -5,14 +5,10 @@
 
   <structs>
     <Transform>
-      struct Transform{
+      struct Transform {
         mat4 model;
         mat4 view;
         mat4 projection;
-
-        mat4 getTransformMatrix{
-          return model * view * projection;
-        }
       }
     </Transform>
   </structs>

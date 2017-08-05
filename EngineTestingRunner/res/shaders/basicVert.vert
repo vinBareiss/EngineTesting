@@ -7,7 +7,7 @@ uniform Transform transform;
 
 void main(){
 		
-		gl_Position = transform.getTransformMatrix() * vec4(pos,1.0f);
+		gl_Position = transform.projection * transform.view * transform.model * vec4(pos,1.0f);
 
 		Color = vec4(normal, 1.0);
 }

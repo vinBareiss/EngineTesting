@@ -33,6 +33,9 @@ namespace EngineTestingNrDuo.src.shading
 
         public UnlitShader() : base()
         {
+            //tell the shader what we want
+            mVertexFormat =(int)( VertexFormatFlag.Position | VertexFormatFlag.Color);
+
             AddVertexShader(ResourceLoader.LoadShader("res/shaders/unlit_vertex.glsl"));
             AddFragmentShader(ResourceLoader.LoadShader("res/shaders/unlit_fragment.glsl"));
             Compile();
@@ -45,7 +48,7 @@ namespace EngineTestingNrDuo.src.shading
         {
             //get cam for rast
             Camera cam = Camera.GetInstance();
-         
+
             SetUniform("transform", gameObject.Transform.Model * cam.ViewMatrix * cam.ProjectionMatrix, false);
             /*SetUniform("transform.view", OpenTK.Matrix4.Identity);
             SetUniform("transform.projection", OpenTK.Matrix4.Identity);*/

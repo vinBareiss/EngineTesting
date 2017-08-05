@@ -108,6 +108,7 @@
     <Compile Include="src\util\OpenGlHandle.cs" />
     <Compile Include="src\util\ResourceLoader.cs" />
     <Compile Include="src\util\Singelton.cs" />
+    <Compile Include="src\util\VertexFormat.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -123,6 +124,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="res\shaders\copyThis.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="res\conventions.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

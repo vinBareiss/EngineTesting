@@ -52,7 +52,7 @@ namespace EngineTesting.src.Engine.Shader
             var desc = ((DescriptionAttribute)attr[0]).Description.ToString();
 
             //build the version string
-            return $"#version{desc}";
+            return $"#version {desc}";
         }
 
     }

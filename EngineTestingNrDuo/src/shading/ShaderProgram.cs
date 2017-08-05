@@ -16,9 +16,13 @@ namespace EngineTestingNrDuo.src.shading
     {
         List<int> mShaders;
         private Dictionary<string, int> mUniforms;
+
+        protected int mVertexFormat;
+        public int VertexFormat { get { return mVertexFormat; } }
+
+
         /// <summary>
         /// We use this name for sorting all rendercalls by shader
-        /// 
         /// </summary>
         public string Name { get { return this.GetType().Name; } }
 
