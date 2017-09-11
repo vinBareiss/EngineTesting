@@ -90,6 +90,7 @@
     <Compile Include="res\models\Box.cs" />
     <Compile Include="res\models\Model.cs" />
     <Compile Include="res\models\Teapot.cs" />
+    <Compile Include="src\core\components\Material.cs" />
     <Compile Include="src\util\buffer\Buffer.cs" />
     <Compile Include="src\util\buffer\IndexBuffer.cs" />
     <Compile Include="src\util\buffer\VertexArray.cs" />

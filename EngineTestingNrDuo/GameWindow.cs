@@ -70,6 +70,7 @@ namespace EngineTestingNrDuo
 
             vao.Unbind();
 
+            GameObject boxTest = new GameObject();
             
             GameObject planeObj = new GameObject();
             RenderInfo planeInfo = new RenderInfo(UnlitShader.GetInstance(), vao, indices.Length);
@@ -90,7 +91,7 @@ namespace EngineTestingNrDuo
         {
             t += (float)e.Time;
             //test
-            scenegraph.Root.Transform.Model *= Matrix4.CreateRotationZ((float)Math.Sin(t/10));
+            //scenegraph.Root.Transform.Model *= Matrix4.CreateRotationZ((float)Math.Sin(t/10));
 
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);

@@ -11,9 +11,10 @@ namespace EngineTestingNrDuo.src.util
     /// </summary>
     enum VertexFormatFlag : int
     {
-        Position = 0b0001,
-        UvCoord = 0b0010,
-        Normal = 0b0100,
-        Color = 0b1000
+        Position = 0, //0b0001,
+        UvCoord = 1,// 0b0010,
+        Normal = 2,//0b0100,
+        Color = 3,//0b1000,
+        Indices = 4//0b10000
     }
 }

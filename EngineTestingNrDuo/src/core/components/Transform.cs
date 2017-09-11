@@ -27,6 +27,33 @@ namespace EngineTestingNrDuo.src.core.components
         }
 
         /// <summary>
+        /// This adds the supplied Vector to the current position
+        /// </summary>
+        /// <param name="v">In which direction and how far we are moving</param>
+        void Translate(Vector3 v)
+        {
+            mModel *= Matrix4.CreateTranslation(v);
+        }
+
+        /// <summary>
+        /// Adds the supplied rotation to the model
+        /// </summary>
+        /// <param name="f">Rotation in degree</param>
+        void RotateX(float f)
+        {
+            throw new NotImplementedException();
+        }
+
+        //float scale
+        void Scale(float f)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+        /// <summary>
         /// Adds two Transforms together, keeps parent of the first one
         /// </summary>
         /// <param name="org"></param>

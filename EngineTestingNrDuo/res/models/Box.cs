@@ -5,14 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 using EngineTestingNrDuo.src.util;
+using EngineTestingNrDuo.src.shading;
+using EngineTestingNrDuo.src.core;
 
+using EngineTestingNrDuo.src.util.buffer;
 
 namespace EngineTestingNrDuo.res.models
 {
     class Box : Model
     {
-        #region Singelton
-        static Box mInstance;
+        #region "Singelton"
+        private static Box mInstance = null;
         public static Box GetInstance()
         {
             if (mInstance == null)
@@ -22,12 +25,9 @@ namespace EngineTestingNrDuo.res.models
         }
         #endregion
 
-        private ParsedObj mData;
-
         public Box()
         {
-            //this is the first time we want this Model, load it from its OBJ file
-            ParsedObj data =ResourceLoader.LoadFile("res/models/Box.obj");
+            this.mData = ResourceLoader.LoadFile("box.obj");
         }
     }
 }

@@ -9,6 +9,8 @@ using EngineTestingNrDuo.src.util.buffer;
 using OpenTK;
 using EngineTestingNrDuo.src.core.components;
 using EngineTestingNrDuo.src.shading;
+using EngineTestingNrDuo.src.core;
+
 
 namespace EngineTestingNrDuo.res.models
 {
@@ -20,23 +22,58 @@ namespace EngineTestingNrDuo.res.models
     /// TODO: Implement singelton here?
     abstract class Model
     {
-        /// <summary>
-        /// This Function takes the Parsed data from the OBJ file and buffers it into the right VBO´s IBO´s and
-        /// produces a RenderInfo object that can be used to draw this Model
-        /// </summary>
-        /// <param name="prog"></param>
-        /// <returns></returns>
-        public RenderInfo GetRenderInfo(ShaderProgram prog)
+        protected ParsedObj mData;
+
+
+        public GameObject GetGameObject(ShaderProgram shader)
         {
-            //first we check what data the Shader does take...
-            
-            //we then check if the obj file supplied that data
+            VertexArray vao = new VertexArray();
+            vao.Bind();
 
-            //if yes, we set the VertexAttrib arrays
+            VertexBuffer<float> vbo = new VertexBuffer<float>();
+            vbo.Bind();
 
-            //and build the renderInfo object
+            //for every flag in VertexFormatFlat
+            for (int i = 0; i < 4; i++) {
+                if ((shader.VertexFormat & (1 << i)) != 0) {
+                    //flag is set in shader
+                    if ((mData.GetVertexFormat() & (1 << i)) != 0) {
+                        //this data exists, create vertexattribpointer for it
+                        -
+                    } else {
+                        throw new ApplicationException("Shader requested data that the model did not deliver");
+                    }
+                }
+            }
 
-            return null;
+        }
+
+        protected static void SetVertexAttribPointer(ShaderProgram shader, ParsedObj modelData)
+        {
+
+
+        }
+
+        public static bool CheckVertexFormat(int shaderFormat, int vertexFormat)
+        {
+            //dont need to check for pos, every vertex has that
+            //check for UV
+            if ((shaderFormat & (int)VertexFormatFlag.UvCoord) != 0) {
+                //shader wants this
+                if ((vertexFormat & (int)VertexFormatFlag.UvCoord) == 0)
+                    throw new ApplicationException("Shader requested UVCoords that were not supplied by the model");
+            }
+
+            //check for Normal
+            if ((shaderFormat & (int)VertexFormatFlag.Normal) != 0) {
+                //shader wants this
+                if ((vertexFormat & (int)VertexFormatFlag.Normal) == 0)
+                    //vertex dont have this
+                    throw new ApplicationException("Shader requested UVCoords that were not supplied by the model");
+            }
+
+            //if we got to this without an exception, we are aOk
+            return true;
         }
     }
 }
