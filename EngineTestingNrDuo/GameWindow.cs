@@ -12,6 +12,8 @@ using EngineTestingNrDuo.src.core;
 using EngineTestingNrDuo.src.shading;
 using EngineTestingNrDuo.src.util.buffer;
 using EngineTestingNrDuo.src.core.components;
+using EngineTestingNrDuo.res.models;
+
 
 namespace EngineTestingNrDuo
 {
@@ -53,30 +55,11 @@ namespace EngineTestingNrDuo
             coreEngine = CoreEngine.GetInstance();
             scenegraph = Scenegraph.GetInstance();
             renderingEngine = RenderingEngine.GetInstance();
+  
 
-
-            VertexArray vao = new VertexArray();
-            vao.Bind();
-
-            VertexBuffer<float> Vbo = new VertexBuffer<float>();
-            Vbo.Bind();
-            Vbo.BufferData(vertices);
-            Vbo.SetVertexAttribPointer(1, 3, VertexAttribPointerType.Float,
-                                       false, 3 * Vbo.ElementSize, 0);
-
-            IndexBuffer ibo = new IndexBuffer();
-            ibo.Bind();
-            ibo.BufferData(indices);
-
-            vao.Unbind();
-
-            GameObject boxTest = new GameObject();
-            
-            GameObject planeObj = new GameObject();
-            RenderInfo planeInfo = new RenderInfo(UnlitShader.GetInstance(), vao, indices.Length);
-            planeObj.AddComponent("renderInfo", planeInfo);
-
-            scenegraph.Root.AddChild(planeObj);
+            GameObject boxTest = Box.GetInstance().GetGameObject(NormalViewShader.GetInstance());
+           
+            scenegraph.Root.AddChild(boxTest);
 
             Camera.GetInstance().LookAt(new Vector3(0));
             coreEngine.Start(this);
@@ -91,13 +74,13 @@ namespace EngineTestingNrDuo
         {
             t += (float)e.Time;
             //test
-            //scenegraph.Root.Transform.Model *= Matrix4.CreateRotationZ((float)Math.Sin(t/10));
+            scenegraph.Root.Transform.Model *= Matrix4.CreateRotationZ((float)Math.Sin(t) / 1000);
 
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             renderingEngine.Render();
-
+            Console.WriteLine(GL.GetError());
             this.SwapBuffers();
             base.OnRenderFrame(e);
         }

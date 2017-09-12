@@ -91,6 +91,7 @@
     <Compile Include="res\models\Model.cs" />
     <Compile Include="res\models\Teapot.cs" />
     <Compile Include="src\core\components\Material.cs" />
+    <Compile Include="src\shading\NormalViewShader.cs" />
     <Compile Include="src\util\buffer\Buffer.cs" />
     <Compile Include="src\util\buffer\IndexBuffer.cs" />
     <Compile Include="src\util\buffer\VertexArray.cs" />
@@ -118,13 +119,21 @@
     <None Include="res\models\Box.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="res\shaders\normalView_fragment.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="res\shaders\normalView_vertex.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="res\shaders\unlit_vertex.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="res\shaders\unlit_fragment.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="res\shaders\copyThis.glsl" />
+    <None Include="res\shaders\copyThis.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="res\conventions.txt" />

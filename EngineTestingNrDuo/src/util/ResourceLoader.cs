@@ -37,7 +37,7 @@ namespace EngineTestingNrDuo.src.util
         /// </summary>
         /// <param name="path">path to the file</param>
         /// <returns><see cref="ParsedObj"/>, with VAO, VBO, IBO</returns>
-        public static ParsedObj LoadFile(string path)
+        public static Mesh LoadFile(string path)
         {
             //check if file is ok
             FileInfo file = new FileInfo(path);
@@ -47,16 +47,26 @@ namespace EngineTestingNrDuo.src.util
                 throw new IOException("This is not an .OBJ file");
 
             //allocate space for variables
+
+            float[] outputPositions = null;
+
             bool hasUv = false;
-            float[] outUvCoords = null;
+            //Vector2[] outUvCoords = null;
+            float[] outputUvCoords = null;
+
             bool hasNormals = false;
-            float[] outNormals = null;
+            //Vector3[] outNormals = null;
+            float[] outputNormals = null;
+
+
             bool firstFace = true;
             List<uint> outIndices = new List<uint>();
 
-            List<float> positions = new List<float>();
-            List<float> uvCoords = new List<float>();
-            List<float> normals = new List<float>();
+
+
+            List<Vector3> positions = new List<Vector3>();
+            List<Vector2> uvCoords = new List<Vector2>();
+            List<Vector3> normals = new List<Vector3>();
 
             //read in file line by line
             using (StreamReader sr = new StreamReader(file.OpenRead())) {
@@ -79,69 +89,82 @@ namespace EngineTestingNrDuo.src.util
                             x = float.Parse(lineFragments[1], CultureInfo.InvariantCulture);
                             y = float.Parse(lineFragments[2], CultureInfo.InvariantCulture);
                             z = float.Parse(lineFragments[3], CultureInfo.InvariantCulture);
-                            //Vector3 pos = new Vector3(x, y, z);
+                            Vector3 pos = new Vector3(x, y, z);
 
-                            positions.Add(x);
-                            positions.Add(y);
-                            positions.Add(z);
+                            positions.Add(pos);
                             break;
                         case "vt":
                             //Console.WriteLine($"VertexTexture : {line}");
                             float u = float.Parse(lineFragments[1], CultureInfo.InvariantCulture);
                             float v = float.Parse(lineFragments[2], CultureInfo.InvariantCulture);
-                            //Vector2 uv = new Vector2(u, v);
+                            Vector2 uv = new Vector2(u, v);
 
-                            uvCoords.Add(u);
-                            uvCoords.Add(v);
+                            uvCoords.Add(uv);
                             break;
                         case "vn":
                             //Console.WriteLine($"VertexNormal : {line}");
                             x = float.Parse(lineFragments[1], CultureInfo.InvariantCulture);
                             y = float.Parse(lineFragments[2], CultureInfo.InvariantCulture);
                             z = float.Parse(lineFragments[3], CultureInfo.InvariantCulture);
-                            //Vector3 normal = new Vector3(x, y, z);
+                            Vector3 normal = new Vector3(x, y, z);
 
-                            normals.Add(x);
-                            normals.Add(y);
-                            normals.Add(z);
+                            normals.Add(normal);
                             break;
                         case "f":
                             //process face
                             if (firstFace) {
                                 firstFace = false;
+
+                                outputPositions = new float[positions.Count * 3];
+
                                 //does our model even have UVCoords?
                                 if (uvCoords.Count > 0) {
                                     hasUv = true;
-                                    outUvCoords = new float[(positions.Count/3)*2]; //we only have 2/3 the ammount of uv
+                                    //outUvCoords = new Vector2[positions.Count];
+                                    outputUvCoords = new float[positions.Count * 2];
                                 }
                                 //same with normals
                                 if (normals.Count > 0) {
                                     hasNormals = true;
-                                    outNormals = new float[positions.Count];
+                                    //outNormals = new Vector3[positions.Count];
+                                    outputNormals = new float[positions.Count * 3];
                                 }
                             }
 
                             for (int i = 1; i <= 3; i++) {
                                 //5/1/1
-                                string[] faceData = lineFragments[i].Split(new char[] { '/' });
+                                string[] vertexData = lineFragments[i].Split(new char[] { '/' });
 
                                 //get index of position
-                                int vertexIndex = int.Parse(faceData[0]) - 1;
+                                int positionIndex = int.Parse(vertexData[0]) - 1;
+                                int adjustedIndex = positionIndex * 3;
+
+                                outputPositions[adjustedIndex] = positions[positionIndex].X;
+                                outputPositions[adjustedIndex + 1] = positions[positionIndex].Y;
+                                outputPositions[adjustedIndex + 2] = positions[positionIndex].Z;
+
                                 if (hasUv) {
                                     //get index of uvCoord
-                                    int uvIndex = int.Parse(faceData[1]) - 1;
-                                    outUvCoords[vertexIndex] = uvCoords[uvIndex];
+                                    int uvIndex = int.Parse(vertexData[1]) - 1;
+                                    //outUvCoords[positionIndex] = uvCoords[uvIndex];
+
+                                    outputUvCoords[adjustedIndex] = uvCoords[uvIndex].X;
+                                    outputUvCoords[adjustedIndex + 1] = uvCoords[uvIndex].Y;
                                 }
 
                                 if (hasNormals) {
                                     //get index of normal
-                                    int normIndex = int.Parse(faceData[2]) - 1;
-                                    outNormals[vertexIndex] = normals[normIndex];
+                                    int normIndex = int.Parse(vertexData[2]) - 1;
+                                    //outNormals[positionIndex] = normals[normIndex];
+
+                                    outputNormals[adjustedIndex] = normals[normIndex].X;
+                                    outputNormals[adjustedIndex + 1] = normals[normIndex].Y;
+                                    outputNormals[adjustedIndex + 2] = normals[normIndex].Z;
                                 }
 
 
                                 //put all the data in the fitting arrays
-                                outIndices.Add((uint)vertexIndex); //where to find the position when drawing
+                                outIndices.Add((uint)positionIndex); //where to find the position when drawing
                             }
 
 
@@ -152,7 +175,17 @@ namespace EngineTestingNrDuo.src.util
                     }
                 }
             }
-            return new ParsedObj(outIndices.ToArray(), positions.ToArray(), outUvCoords, outNormals);
+            //TODO: allways use float arrays
+            Mesh m = new Mesh();
+            m.AddIndices(outIndices.ToArray());
+            m.AddData(VertexFormatFlag.Position, outputPositions);
+            if (hasUv)
+                m.AddData(VertexFormatFlag.UvCoord, outputUvCoords);
+            if (hasNormals)
+                m.AddData(VertexFormatFlag.Normal, outputNormals);
+
+            return m;
+            //return new ParsedObj(outIndices.ToArray(), positions.ToArray(), outUvCoords, outNormals);
         }
     }
 
@@ -171,7 +204,7 @@ namespace EngineTestingNrDuo.src.util
             mData = new Dictionary<VertexFormatFlag, float[]>();
         }
 
-        void AddData(VertexFormatFlag dataType, float[] data)
+        public void AddData(VertexFormatFlag dataType, float[] data)
         {
             if (mData.ContainsKey(dataType))
                 throw new ApplicationException("Allready have this data");
@@ -179,7 +212,7 @@ namespace EngineTestingNrDuo.src.util
             mData.Add(dataType, data);
             VertexFormat |= (int)dataType;
         }
-        void AddIndices(uint[] indices)
+        public void AddIndices(uint[] indices)
         {
             IsIndexed = true;
             this.Indices = indices;
@@ -188,6 +221,7 @@ namespace EngineTestingNrDuo.src.util
 
     }
 
+    [Obsolete("Use Mesh class",true)]
     public struct ParsedObj
     {
         public uint[] Indices;

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+using OpenTK;
 using EngineTestingNrDuo.src.util;
 using EngineTestingNrDuo.src.util.buffer;
-using OpenTK;
 using EngineTestingNrDuo.src.core.components;
 using EngineTestingNrDuo.src.shading;
 using EngineTestingNrDuo.src.core;
@@ -22,58 +23,54 @@ namespace EngineTestingNrDuo.res.models
     /// TODO: Implement singelton here?
     abstract class Model
     {
-        protected ParsedObj mData;
+        protected Mesh mData;
 
 
         public GameObject GetGameObject(ShaderProgram shader)
-        {
+            {
             VertexArray vao = new VertexArray();
             vao.Bind();
 
-            VertexBuffer<float> vbo = new VertexBuffer<float>();
-            vbo.Bind();
+            IndexBuffer ibo = new IndexBuffer();
+            ibo.Bind();
+            ibo.BufferData(mData.Indices);
 
             //for every flag in VertexFormatFlat
-            for (int i = 0; i < 4; i++) {
-                if ((shader.VertexFormat & (1 << i)) != 0) {
-                    //flag is set in shader
-                    if ((mData.GetVertexFormat() & (1 << i)) != 0) {
-                        //this data exists, create vertexattribpointer for it
-                        -
-                    } else {
-                        throw new ApplicationException("Shader requested data that the model did not deliver");
-                    }
+            foreach (VertexFormatFlag f in shader.VertexFormat) {
+                
+
+                if (!mData.Data.ContainsKey(f))
+                    throw new ApplicationException("The data requested by the shader is not supplied by the mesh");
+                VertexBuffer<float> vbo = new VertexBuffer<float>();
+                vbo.Bind();
+                vbo.BufferData(mData.Data[f]);
+
+                //set vertexattribpointer
+                switch (f) {
+                    case VertexFormatFlag.Position:
+                        vbo.SetVertexAttribPointer(0, 3, OpenTK.Graphics.OpenGL4.VertexAttribPointerType.Float, false, 3 * vbo.ElementSize, 0);
+                        break;
+                    case VertexFormatFlag.UvCoord:
+                        vbo.SetVertexAttribPointer(0, 2, OpenTK.Graphics.OpenGL4.VertexAttribPointerType.Float, false, 2 * vbo.ElementSize, 0);
+                        break;
+                    case VertexFormatFlag.Normal:
+                        vbo.SetVertexAttribPointer(0, 3, OpenTK.Graphics.OpenGL4.VertexAttribPointerType.Float, false, 3 * vbo.ElementSize, 0);
+                        break;
+                    case VertexFormatFlag.Color:
+                        throw new NotImplementedException();
+                    default:
+                        throw new ApplicationException("WTF, how did this happen?");
                 }
+
+                vbo.Unbind();
             }
 
-        }
+            vao.Unbind();
 
-        protected static void SetVertexAttribPointer(ShaderProgram shader, ParsedObj modelData)
-        {
-
-
-        }
-
-        public static bool CheckVertexFormat(int shaderFormat, int vertexFormat)
-        {
-            //dont need to check for pos, every vertex has that
-            //check for UV
-            if ((shaderFormat & (int)VertexFormatFlag.UvCoord) != 0) {
-                //shader wants this
-                if ((vertexFormat & (int)VertexFormatFlag.UvCoord) == 0)
-                    throw new ApplicationException("Shader requested UVCoords that were not supplied by the model");
-            }
-
-            //check for Normal
-            if ((shaderFormat & (int)VertexFormatFlag.Normal) != 0) {
-                //shader wants this
-                if ((vertexFormat & (int)VertexFormatFlag.Normal) == 0)
-                    //vertex dont have this
-                    throw new ApplicationException("Shader requested UVCoords that were not supplied by the model");
-            }
-
-            //if we got to this without an exception, we are aOk
-            return true;
+            GameObject gameObject = new GameObject();
+            RenderInfo renderInfo = new RenderInfo(shader, vao, ibo.Length);
+            gameObject.AddComponent("renderInfo",renderInfo);
+            return gameObject;
         }
     }
 }

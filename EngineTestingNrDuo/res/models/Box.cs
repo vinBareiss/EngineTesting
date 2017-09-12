@@ -27,7 +27,7 @@ namespace EngineTestingNrDuo.res.models
 
         public Box()
         {
-            this.mData = ResourceLoader.LoadFile("box.obj");
+            this.mData = ResourceLoader.LoadFile("res/models/box.obj");
         }
     }
 }

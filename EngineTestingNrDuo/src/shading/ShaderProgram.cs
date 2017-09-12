@@ -17,8 +17,8 @@ namespace EngineTestingNrDuo.src.shading
         List<int> mShaders;
         private Dictionary<string, int> mUniforms;
 
-        protected int mVertexFormat;
-        public int VertexFormat { get { return mVertexFormat; } }
+        protected VertexFormatFlag[] mVertexFormat;
+        public VertexFormatFlag[] VertexFormat { get { return mVertexFormat; } }
 
 
         /// <summary>
@@ -83,7 +83,9 @@ namespace EngineTestingNrDuo.src.shading
         {
             int loc = GL.GetUniformLocation(this, name);
             if (loc == -1)
+                //Console.WriteLine("Uniform error");
                 throw new ApplicationException($"Unknown Uniform: {name}");
+
             mUniforms.Add(name, loc);
         }
         public virtual void UpdateUniforms(GameObject gameObject) { }
