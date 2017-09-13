@@ -28,13 +28,13 @@ namespace EngineTestingNrDuo.src.shading
             AddFragmentShader(ResourceLoader.LoadShader("res/shaders/normalView_fragment.glsl"));
             Compile();
 
-            //AddUniform("transform");
+            AddUniform("transform");
         }
 
         public override void UpdateUniforms(GameObject gameObject)
         {
             Camera cam = Camera.GetInstance();
-            //SetUniform("transform", gameObject.Transform.Model * cam.ViewMatrix * cam.ProjectionMatrix, false);
+            SetUniform("transform", gameObject.Transform.Model * cam.ViewMatrix * cam.ProjectionMatrix, false);
         }
     }
 }

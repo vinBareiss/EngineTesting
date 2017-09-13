@@ -51,10 +51,10 @@ namespace EngineTestingNrDuo.res.models
                         vbo.SetVertexAttribPointer(0, 3, OpenTK.Graphics.OpenGL4.VertexAttribPointerType.Float, false, 3 * vbo.ElementSize, 0);
                         break;
                     case VertexFormatFlag.UvCoord:
-                        vbo.SetVertexAttribPointer(0, 2, OpenTK.Graphics.OpenGL4.VertexAttribPointerType.Float, false, 2 * vbo.ElementSize, 0);
+                        vbo.SetVertexAttribPointer(1, 2, OpenTK.Graphics.OpenGL4.VertexAttribPointerType.Float, false, 2 * vbo.ElementSize, 0);
                         break;
                     case VertexFormatFlag.Normal:
-                        vbo.SetVertexAttribPointer(0, 3, OpenTK.Graphics.OpenGL4.VertexAttribPointerType.Float, false, 3 * vbo.ElementSize, 0);
+                        vbo.SetVertexAttribPointer(2, 3, OpenTK.Graphics.OpenGL4.VertexAttribPointerType.Float, false, 3 * vbo.ElementSize, 0);
                         break;
                     case VertexFormatFlag.Color:
                         throw new NotImplementedException();
@@ -68,7 +68,7 @@ namespace EngineTestingNrDuo.res.models
             vao.Unbind();
 
             GameObject gameObject = new GameObject();
-            RenderInfo renderInfo = new RenderInfo(shader, vao, ibo.Length);
+            RenderInfo renderInfo = new RenderInfo(shader, vao, 18);
             gameObject.AddComponent("renderInfo",renderInfo);
             return gameObject;
         }

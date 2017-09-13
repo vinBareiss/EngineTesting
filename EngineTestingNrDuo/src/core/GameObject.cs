@@ -20,13 +20,11 @@ namespace EngineTestingNrDuo.src.core
             get { return mParent; }
             set { mParent = value; }
         }
-
         public Transform Transform
         {
             get { return (Transform)Components["transform"]; }
             set { Components["transform"] = value; }
         }
-
         public List<GameObject> Children { get { return mChildren; } }
 
         public GameObject() //Reminder: parent = null bei rootObj

@@ -51,11 +51,11 @@ namespace EngineTestingNrDuo.src.util
             float[] outputPositions = null;
 
             bool hasUv = false;
-            //Vector2[] outUvCoords = null;
+            Vector2[] outUvCoords = null;
             float[] outputUvCoords = null;
 
             bool hasNormals = false;
-            //Vector3[] outNormals = null;
+            Vector3[] outNormals = null;
             float[] outputNormals = null;
 
 
@@ -120,13 +120,13 @@ namespace EngineTestingNrDuo.src.util
                                 //does our model even have UVCoords?
                                 if (uvCoords.Count > 0) {
                                     hasUv = true;
-                                    //outUvCoords = new Vector2[positions.Count];
+                                    outUvCoords = new Vector2[positions.Count];
                                     outputUvCoords = new float[positions.Count * 2];
                                 }
                                 //same with normals
                                 if (normals.Count > 0) {
                                     hasNormals = true;
-                                    //outNormals = new Vector3[positions.Count];
+                                    outNormals = new Vector3[positions.Count];
                                     outputNormals = new float[positions.Count * 3];
                                 }
                             }
@@ -146,7 +146,7 @@ namespace EngineTestingNrDuo.src.util
                                 if (hasUv) {
                                     //get index of uvCoord
                                     int uvIndex = int.Parse(vertexData[1]) - 1;
-                                    //outUvCoords[positionIndex] = uvCoords[uvIndex];
+                                    outUvCoords[positionIndex] = uvCoords[uvIndex];
 
                                     outputUvCoords[adjustedIndex] = uvCoords[uvIndex].X;
                                     outputUvCoords[adjustedIndex + 1] = uvCoords[uvIndex].Y;
@@ -155,7 +155,7 @@ namespace EngineTestingNrDuo.src.util
                                 if (hasNormals) {
                                     //get index of normal
                                     int normIndex = int.Parse(vertexData[2]) - 1;
-                                    //outNormals[positionIndex] = normals[normIndex];
+                                    outNormals[positionIndex] = normals[normIndex];
 
                                     outputNormals[adjustedIndex] = normals[normIndex].X;
                                     outputNormals[adjustedIndex + 1] = normals[normIndex].Y;
@@ -175,7 +175,9 @@ namespace EngineTestingNrDuo.src.util
                     }
                 }
             }
-            //TODO: allways use float arrays
+
+            //debug
+            
             Mesh m = new Mesh();
             m.AddIndices(outIndices.ToArray());
             m.AddData(VertexFormatFlag.Position, outputPositions);
@@ -221,7 +223,7 @@ namespace EngineTestingNrDuo.src.util
 
     }
 
-    [Obsolete("Use Mesh class",true)]
+    [Obsolete("Use Mesh class", true)]
     public struct ParsedObj
     {
         public uint[] Indices;

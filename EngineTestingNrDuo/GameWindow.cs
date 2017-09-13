@@ -55,9 +55,13 @@ namespace EngineTestingNrDuo
             coreEngine = CoreEngine.GetInstance();
             scenegraph = Scenegraph.GetInstance();
             renderingEngine = RenderingEngine.GetInstance();
+
+            GL.Enable(EnableCap.DepthClamp);
+            GL.DepthFunc(DepthFunction.Greater);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
   
 
-            GameObject boxTest = Box.GetInstance().GetGameObject(NormalViewShader.GetInstance());
+            GameObject boxTest = Box.GetInstance().GetGameObject(UnlitShader.GetInstance());
            
             scenegraph.Root.AddChild(boxTest);
 
@@ -74,15 +78,16 @@ namespace EngineTestingNrDuo
         {
             t += (float)e.Time;
             //test
-            scenegraph.Root.Transform.Model *= Matrix4.CreateRotationZ((float)Math.Sin(t) / 1000);
+            //scenegraph.Root.Transform.Model *= Matrix4.CreateRotationZ((float)Math.Sin(t) / 1000);
 
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+
             renderingEngine.Render();
-            Console.WriteLine(GL.GetError());
+
+
             this.SwapBuffers();
-            base.OnRenderFrame(e);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)

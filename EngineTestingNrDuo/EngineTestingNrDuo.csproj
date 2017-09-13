@@ -89,7 +89,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="res\models\Box.cs" />
     <Compile Include="res\models\Model.cs" />
-    <Compile Include="res\models\Teapot.cs" />
     <Compile Include="src\core\components\Material.cs" />
     <Compile Include="src\shading\NormalViewShader.cs" />
     <Compile Include="src\util\buffer\Buffer.cs" />
