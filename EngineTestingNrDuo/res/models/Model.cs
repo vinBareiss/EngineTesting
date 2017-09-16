@@ -24,8 +24,7 @@ namespace EngineTestingNrDuo.res.models
     abstract class Model
     {
         protected Mesh mData;
-
-
+               
         public GameObject GetGameObject(ShaderProgram shader)
             {
             VertexArray vao = new VertexArray();
@@ -68,7 +67,7 @@ namespace EngineTestingNrDuo.res.models
             vao.Unbind();
 
             GameObject gameObject = new GameObject();
-            RenderInfo renderInfo = new RenderInfo(shader, vao, 18);
+            RenderInfo renderInfo = new RenderInfo(shader, vao, ibo.Length);
             gameObject.AddComponent("renderInfo",renderInfo);
             return gameObject;
         }

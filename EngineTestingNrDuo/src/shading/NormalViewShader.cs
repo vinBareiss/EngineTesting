@@ -24,17 +24,22 @@ namespace EngineTestingNrDuo.src.shading
         {
             mVertexFormat = new VertexFormatFlag[] { VertexFormatFlag.Position, VertexFormatFlag.Normal };
 
-            AddVertexShader(ResourceLoader.LoadShader("res/shaders/normalView_vertex.glsl"));
-            AddFragmentShader(ResourceLoader.LoadShader("res/shaders/normalView_fragment.glsl"));
+            AddVertexShader(ResourceLoader.LoadShader("res/shaders/normalView/vertex.glsl"));
+            AddFragmentShader(ResourceLoader.LoadShader("res/shaders/normalView/fragment.glsl"));
             Compile();
 
-            AddUniform("transform");
+            AddUniform("transform.model");
+            AddUniform("transform.view");
+            AddUniform("transform.projection");
         }
 
         public override void UpdateUniforms(GameObject gameObject)
         {
             Camera cam = Camera.GetInstance();
-            SetUniform("transform", gameObject.Transform.Model * cam.ViewMatrix * cam.ProjectionMatrix, false);
+
+            SetUniform("transform.model", gameObject.Transform.Model);
+            SetUniform("transform.view", cam.ViewMatrix);
+            SetUniform("transform.projection", cam.ProjectionMatrix);
         }
     }
 }

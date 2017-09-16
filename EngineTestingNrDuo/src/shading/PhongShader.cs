@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EngineTestingNrDuo.src.core.components
+namespace EngineTestingNrDuo.src.shading
 {
-    class Material
+    class PhongShader
     {
-        public Material()
-        {
-            //
-        }
     }
 }

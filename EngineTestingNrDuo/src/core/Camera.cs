@@ -33,6 +33,8 @@ namespace EngineTestingNrDuo.src.core
         float mPitch, mYaw;
         float mFov;
         float mAspect;
+        float mNear;
+        float mFar;
 
         private Matrix4 mViewMatrix;
         private Matrix4 mProjectionMatrix;
@@ -65,7 +67,9 @@ namespace EngineTestingNrDuo.src.core
 
             mMoveSpeed = 0.05f;
             mLookSpeed = 0.2f;
-            //start of by looking at the center
+
+            mFar = 100.0f;
+            mNear = 0.1f;
             
         }
         //start the cam
@@ -73,7 +77,7 @@ namespace EngineTestingNrDuo.src.core
         {
             //setup matrices
             mAspect = w.Width / w.Height;
-            mProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(mFov), mAspect, 0.1f, 100.0f);
+            mProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(mFov), mAspect, mNear , mFar);
             mViewMatrix = Matrix4.LookAt(mPosition, mPosition + mFront, mUp);
             //event handlers
             w.KeyUp += KeyUp;
@@ -145,7 +149,7 @@ namespace EngineTestingNrDuo.src.core
         private void MouseWheelChange(object sender, MouseWheelEventArgs e)
         {
             mFov += e.Delta;
-            mProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(mFov), mAspect, 0.1f, 100.0f);
+            mProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(mFov), mAspect, mNear, mFar);
 
         }
         private void MouseMove(object sender, MouseMoveEventArgs e)

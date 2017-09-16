@@ -9,7 +9,8 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using EngineTestingNrDuo.src.util;
 using EngineTestingNrDuo.src.core;
-
+using System.Text.RegularExpressions;
+using System.Diagnostics;
 namespace EngineTestingNrDuo.src.shading
 {
     abstract class ShaderProgram : OpenGlHandle
@@ -40,15 +41,28 @@ namespace EngineTestingNrDuo.src.shading
         {
             AddShader(text, ShaderType.FragmentShader);
         }
-
-        /// <summary>
-        /// Actuall void for creating, compiling and checking shaders
-        /// </summary>
-        /// <param name="text">source code of shader</param>
-        /// <param name="type">type of shader</param>
         private void AddShader(string text, ShaderType type)
         {
-            int handle = GL.CreateShader(type);
+            //handle imports
+            //replace #import <DATA> with actuall code
+            foreach (Match m in Regex.Matches(text, "#include [a-z]+\\.[a-z]+;")) {
+                //only get the include part
+                string include = m.ToString().Replace("#include ", "").Replace(";","");
+                switch (include.Split('.')[0]) {
+                    case "structs":
+                        text = text.Replace(m.ToString(), ShaderLibary.GetInstance().GetStruct(include.Split('.')[1]));
+                        break;
+                    case "functions":
+                        text = text.Replace(m.ToString(), ShaderLibary.GetInstance().GetFunction(include.Split('.')[1]));
+                        break;
+                    default:
+                        throw new ApplicationException("Unknown include");
+                }
+            }
+            Debug.WriteLine(text);
+
+            //create shader
+             int handle = GL.CreateShader(type);
             GL.ShaderSource(handle, text);
 
             GL.CompileShader(handle);

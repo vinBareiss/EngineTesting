@@ -32,14 +32,6 @@ namespace EngineTestingNrDuo
         {
             GL.Viewport(0, 0, Width, Height);
         }
-        float[] vertices = {
-           -0.5f, 0.0f, 0.0f,
-            0.5f, 0.0f, 0.0f,
-            0.0f, 0.5f, 0.0f,
-            0.0f,-0.5f, 0,0f
-        };
-        uint[] indices = { 0,1,2,
-                           0,1,3};
 
         CoreEngine coreEngine;
         Scenegraph scenegraph;
@@ -52,20 +44,23 @@ namespace EngineTestingNrDuo
         /// <param name="e">asd</param>
         protected override void OnLoad(EventArgs e)
         {
+            //store refs to the big three for easy use
             coreEngine = CoreEngine.GetInstance();
             scenegraph = Scenegraph.GetInstance();
             renderingEngine = RenderingEngine.GetInstance();
 
-            GL.Enable(EnableCap.DepthClamp);
-            GL.DepthFunc(DepthFunction.Greater);
+            //depth stuff, not working
+            GL.Enable(EnableCap.DepthTest);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-  
 
-            GameObject boxTest = Box.GetInstance().GetGameObject(UnlitShader.GetInstance());
-           
+
+            //simple cube
+            GameObject boxTest = Box.GetInstance().GetGameObject(NormalViewShader.GetInstance());
             scenegraph.Root.AddChild(boxTest);
 
             Camera.GetInstance().LookAt(new Vector3(0));
+
+            //start everything
             coreEngine.Start(this);
         }
 

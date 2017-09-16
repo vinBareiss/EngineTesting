@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<libary>
+  <structs>
+    <transform>struct Transform{
+    mat4 model;
+    mat4 view;
+    mat4 projection;
+    
+    mat4 GetMat4(){
+      return projection * view * model;
+    }
+    };</transform>
+    <baseLight></baseLight>
+    <ambientLight></ambientLight>
+  </structs>
+  <functions>
+    
+  </functions>
+</libary>

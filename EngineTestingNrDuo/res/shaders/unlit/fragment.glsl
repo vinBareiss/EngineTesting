@@ -1,8 +1,9 @@
 ﻿#version 430
 
-in vec3 Col;
+uniform vec3 color;
+
 out vec4 outCol;
 
 void main(){
-	outCol = vec4(Col, 1.0);
+	outCol = vec4(color, 1.0);
 }

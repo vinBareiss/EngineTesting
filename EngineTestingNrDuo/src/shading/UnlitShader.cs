@@ -25,12 +25,13 @@ namespace EngineTestingNrDuo.src.shading
             //tell the shader what we want
             mVertexFormat = new VertexFormatFlag[] { VertexFormatFlag.Position };
 
-            AddVertexShader(ResourceLoader.LoadShader("res/shaders/unlit_vertex.glsl"));
-            AddFragmentShader(ResourceLoader.LoadShader("res/shaders/unlit_fragment.glsl"));
+            AddVertexShader(ResourceLoader.LoadShader("res/shaders/unlit/vertex.glsl"));
+            AddFragmentShader(ResourceLoader.LoadShader("res/shaders/unlit/fragment.glsl"));
             Compile();
-            AddUniform("transform");
-            /*AddUniform("transform.projection");
-            AddUniform("transform.view");*/
+            AddUniform("transform.model");
+            AddUniform("transform.view");
+            AddUniform("transform.projection");
+            AddUniform("color");
         }
 
         public override void UpdateUniforms(GameObject gameObject)
@@ -38,10 +39,11 @@ namespace EngineTestingNrDuo.src.shading
             //get cam for rast
             Camera cam = Camera.GetInstance();
 
-            SetUniform("transform", gameObject.Transform.Model * cam.ViewMatrix * cam.ProjectionMatrix, false);
-            /*SetUniform("transform.view", OpenTK.Matrix4.Identity);
-            SetUniform("transform.projection", OpenTK.Matrix4.Identity);*/
-            //TODO: camera class, proj + view mat4
+            SetUniform("transform.model", gameObject.Transform.Model);
+            SetUniform("transform.view",cam.ViewMatrix);
+            SetUniform("transform.projection",cam.ProjectionMatrix);
+
+            SetUniform("color", new OpenTK.Vector3(1.0f, 0.2f, 0));
         }
     }
 }
